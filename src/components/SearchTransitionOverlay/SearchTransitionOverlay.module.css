@@ -1,0 +1,220 @@
+/* Fullscreen transition layer */
+.search-transition-overlay {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: all;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(234, 242, 255, 0.96), transparent 36%),
+    linear-gradient(90deg, rgba(246, 248, 250, 0.9), rgba(255, 255, 255, 0.98));
+}
+
+/* Soft cloud shapes */
+.transition-cloud {
+  position: absolute;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 30% 45%, rgba(255, 255, 255, 0.98), transparent 58%),
+    radial-gradient(circle at 68% 35%, rgba(234, 242, 255, 0.96), transparent 62%),
+    rgba(255, 255, 255, 0.9);
+  filter: blur(14px);
+  opacity: 1;
+  transform: translateX(-120vw);
+}
+
+.transition-cloud-one {
+  width: 60vw;
+  height: 40vh;
+  top: -4vh;
+  left: -18vw;
+}
+
+.transition-cloud-two {
+  width: 66vw;
+  height: 48vh;
+  top: 22vh;
+  left: -26vw;
+  background:
+    radial-gradient(circle at 35% 45%, rgba(255, 255, 255, 0.96), transparent 58%),
+    radial-gradient(circle at 70% 40%, rgba(220, 227, 234, 0.9), transparent 62%),
+    rgba(234, 242, 255, 0.96);
+}
+
+.transition-cloud-three {
+  width: 58vw;
+  height: 38vh;
+  right: -18vw;
+  bottom: 4vh;
+}
+
+.transition-cloud-four {
+  width: 54vw;
+  height: 36vh;
+  bottom: -8vh;
+  left: 6vw;
+  background:
+    radial-gradient(circle at 28% 50%, rgba(255, 255, 255, 0.9), transparent 58%),
+    rgba(220, 227, 234, 0.82);
+}
+
+/* Cloud-in: cover the current screen */
+.search-transition-cloud-in {
+  animation: transition-overlay-in 0.9s ease forwards;
+}
+
+.search-transition-cloud-in .transition-cloud {
+  animation: transition-cloud-in 0.9s ease forwards;
+}
+
+.search-transition-cloud-in .transition-cloud-two {
+  animation-delay: 0.08s;
+}
+
+.search-transition-cloud-in .transition-cloud-three {
+  animation-delay: 0.14s;
+}
+
+.search-transition-cloud-in .transition-cloud-four {
+  animation-delay: 0.04s;
+}
+
+/* Loading state between screens */
+.search-transition-loading {
+  display: grid;
+  place-items: center;
+  background: rgba(246, 248, 250, 0.98);
+}
+
+.search-transition-loading .transition-cloud {
+  transform: translateX(0);
+}
+
+.transition-loading {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  gap: 14px;
+  padding: 28px;
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+.transition-loading p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: clamp(1rem, 2.4vw, 1.18rem);
+  font-weight: 700;
+}
+
+.transition-spinner {
+  width: 42px;
+  height: 42px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: transition-spinner-spin 0.85s linear infinite;
+}
+
+/* Cloud-out: reveal the map screen */
+.search-transition-cloud-out {
+  animation: transition-overlay-out 0.9s ease forwards;
+}
+
+.search-transition-cloud-out .transition-cloud {
+  animation: transition-cloud-out 0.9s ease forwards;
+  transform: translateX(0);
+}
+
+.search-transition-cloud-out .transition-cloud-two {
+  animation-delay: 0.05s;
+}
+
+.search-transition-cloud-out .transition-cloud-three {
+  animation-delay: 0.11s;
+}
+
+.search-transition-cloud-out .transition-cloud-four {
+  animation-delay: 0.03s;
+}
+
+@keyframes transition-overlay-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes transition-overlay-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes transition-cloud-in {
+  from {
+    transform: translateX(-120vw) scale(0.95);
+  }
+
+  to {
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes transition-cloud-out {
+  from {
+    transform: translateX(0) scale(1);
+  }
+
+  to {
+    transform: translateX(120vw) scale(1.03);
+  }
+}
+
+@keyframes transition-spinner-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Mobile tuning */
+@media (max-width: 640px) {
+  .transition-cloud-one,
+  .transition-cloud-two,
+  .transition-cloud-three,
+  .transition-cloud-four {
+    width: 82vw;
+    height: 32vh;
+  }
+
+  .transition-loading {
+    padding: 22px;
+  }
+}
+
+/* Reduced motion: keep transition simple and calm */
+@media (prefers-reduced-motion: reduce) {
+  .search-transition-overlay,
+  .transition-cloud,
+  .transition-spinner {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .transition-cloud {
+    transform: translateX(0);
+    filter: blur(12px);
+  }
+
+  .transition-spinner {
+    border-top-color: var(--color-border);
+  }
+}
