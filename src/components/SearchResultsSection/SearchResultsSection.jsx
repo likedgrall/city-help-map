@@ -84,7 +84,7 @@ function SearchResultsSection({ searchQuery, selectedCity, onBack }) {
     window.setTimeout(() => {
       setDetailsPlace(null);
       setIsDetailsClosing(false);
-    }, 220);
+    }, 240);
   };
 
   const handlePlaceSelect = (place) => {
@@ -261,14 +261,14 @@ function SearchResultsSection({ searchQuery, selectedCity, onBack }) {
                 ))}
               </MapContainer>
             </section>
-
-            <PlaceDetailsPanel
-              place={detailsPlace}
-              isClosing={isDetailsClosing}
-              onClose={closeDetailsPanel}
-            />
           </div>
         </div>
+
+        <PlaceDetailsPanel
+          place={detailsPlace}
+          isClosing={isDetailsClosing}
+          onClose={closeDetailsPanel}
+        />
       </div>
     </section>
   );
